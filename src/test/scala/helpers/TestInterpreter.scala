@@ -1,7 +1,7 @@
 package helpers
 
 import cats._
-import db_logic.SearchTermOps.{DbOpA, GetTags, SetTags}
+import db_logic.SearchTermService.{DbOpA, GetAll, GetTags, SetTags}
 
 /**
  * Created by 437580 on 21/10/16.
@@ -15,5 +15,6 @@ class TestInterpreter extends (DbOpA ~> Id) {
     case SetTags(email, tagsToSet) =>
       mail = email
       setTags = tagsToSet
+    case GetAll => Map(mail -> setTags)
   }
 }

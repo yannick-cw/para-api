@@ -1,6 +1,6 @@
 package endpoints
 
-import db_logic.SearchTermOps._
+import db_logic.SearchTermService._
 import io.circe.generic.auto._
 import io.circe.syntax._
 import org.http4s.{Request, Response}
@@ -22,5 +22,7 @@ object Endpoints extends CirceInstances {
     case POST -> Root / "tags" / email / tags =>
       setTags(email, tags.split(",").toList)
           .map(_ => Ok("done"))
+    case GET -> Root / "all-tags" =>
+      getAll.map(map => Ok(map.asJson))
   }
 }

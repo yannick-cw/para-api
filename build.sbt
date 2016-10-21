@@ -23,4 +23,3 @@ libraryDependencies ++= http4sDependencies ++ circeDependecies ++ Seq(
   "ch.qos.logback" % "logback-classic" % "1.1.7",
   "org.scalacheck" % "scalacheck_2.11" % "1.13.2"
 )
-
