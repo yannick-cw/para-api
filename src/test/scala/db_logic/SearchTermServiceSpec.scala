@@ -2,6 +2,7 @@ package db_logic
 
 import cats._
 import db_logic.SearchTermOps._
+import helpers.TestInterpreter
 import org.scalatest.{Matchers, WordSpecLike}
 import org.scalacheck.Prop.forAll
 import org.scalatest.prop.Checkers
@@ -10,17 +11,6 @@ class SearchTermServiceSpec extends WordSpecLike with Matchers with Checkers {
 
   val someTags: List[String] = List("search", "tags")
 
-  class TestInterpreter extends (EntityDBA ~> Id) {
-      var mail = ""
-      var setTags = List.empty[String]
-
-      override def apply[A](fa: EntityDBA[A]): Id[A] = fa match {
-        case GetTags(email) => setTags
-        case SetTags(email, tagsToSet) =>
-          mail = email
-          setTags = tagsToSet
-    }
-  }
 
   "The SeatchTermService" should {
     "should be able to write tags" in {

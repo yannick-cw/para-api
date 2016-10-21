@@ -1,32 +1,26 @@
 package endpoints
 
-import db.InMemoryDbInterpreter
 import db_logic.SearchTermOps._
-import org.http4s._
-import org.http4s.dsl._
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import cats.instances.future._
-import org.http4s.EntityEncoder.futureEncoder
-import org.http4s.circe.CirceInstances
 import io.circe.generic.auto._
 import io.circe.syntax._
+import org.http4s.{Request, Response}
+import org.http4s.circe.CirceInstances
+import org.http4s.dsl._
+
+import scalaz.concurrent.Task
 
 object Endpoints extends CirceInstances {
 
   case class Result(email: String, terms: List[String])
+  type Route = PartialFunction[Request, DbOp[Task[Response]]]
 
-  val db: InMemoryDbInterpreter = new InMemoryDbInterpreter
-
-  val retrieveTags = HttpService {
+  def routes: Route = {
     case GET -> Root / "tags" / email =>
-      Ok(getTags(email)
-        .foldMap(db)
-        .map(Result(email, _).asJson))
+      getTags(email)
+        .map(terms => Ok(Result(email, terms).asJson))
 
     case POST -> Root / "tags" / email / tags =>
-      Ok(setTags(email, tags.split(",").toList)
-          .foldMap(db)
-          .map(_ => "done"))
+      setTags(email, tags.split(",").toList)
+          .map(_ => Ok("done"))
   }
 }
