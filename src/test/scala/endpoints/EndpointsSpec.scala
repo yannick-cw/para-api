@@ -18,7 +18,7 @@ class EndpointsSpec extends WordSpecLike with Matchers {
     }
 
     "respond with 200 for a post" in {
-      val request = Request(method = POST, uri = Uri(path = "/tags/email/search,for,this"))
+      val request = Request(method = POST, uri = Uri(path = "/tags/email", query = Query.fromString("tags=search,for,this,shit")))
       val response: Response = endpoints.run(request).run
       response.status should be(Status.Ok)
     }
@@ -31,6 +31,18 @@ class EndpointsSpec extends WordSpecLike with Matchers {
 
     "respond with 404 for an invalid method" in {
       val request = Request(method = GET, uri = Uri(path = "/tags/email/search,for,this"))
+      val response: Response = endpoints.run(request).run
+      response.status should be(Status.NotFound)
+    }
+
+    "respond with 404 for missing parameter" in {
+      val request = Request(method = POST, uri = Uri(path = "/tags/email"))
+      val response: Response = endpoints.run(request).run
+      response.status should be(Status.NotFound)
+    }
+
+    "respond with 404 for wrong parameter" in {
+      val request = Request(method = POST, uri = Uri(path = "/tags/email?tag=dsa,das"))
       val response: Response = endpoints.run(request).run
       response.status should be(Status.NotFound)
     }
