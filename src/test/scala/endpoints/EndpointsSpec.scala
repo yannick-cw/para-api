@@ -12,37 +12,37 @@ class EndpointsSpec extends WordSpecLike with Matchers {
 
   "The Endpoints" should {
     "respond with 200 for a basic request" in {
-      val request = Request(method = GET, uri = Uri(path = "/tags/email"))
+      val request = Request(method = GET, uri = uri("/tags/email"))
       val response: Response = endpoints.run(request).run
       response.status should be(Status.Ok)
     }
 
     "respond with 200 for a post" in {
-      val request = Request(method = POST, uri = Uri(path = "/tags/email", query = Query.fromString("tags=search,for,this,shit")))
+      val request = Request(method = POST, uri = uri("/tags/email?tags=123,32"))
       val response: Response = endpoints.run(request).run
       response.status should be(Status.Ok)
     }
 
     "respond with 404 for a non existing endpoint" in {
-      val request = Request(method = GET, uri = Uri(path = "/nothingHere"))
+      val request = Request(method = GET, uri = uri("/nothingHere"))
       val response: Response = endpoints.run(request).run
       response.status should be(Status.NotFound)
     }
 
     "respond with 404 for an invalid method" in {
-      val request = Request(method = GET, uri = Uri(path = "/tags/email/search,for,this"))
+      val request = Request(method = GET, uri = uri("/tags/email/search,for,this"))
       val response: Response = endpoints.run(request).run
       response.status should be(Status.NotFound)
     }
 
     "respond with 404 for missing parameter" in {
-      val request = Request(method = POST, uri = Uri(path = "/tags/email"))
+      val request = Request(method = POST, uri = uri("/tags/email"))
       val response: Response = endpoints.run(request).run
       response.status should be(Status.NotFound)
     }
 
     "respond with 404 for wrong parameter" in {
-      val request = Request(method = POST, uri = Uri(path = "/tags/email?tag=dsa,das"))
+      val request = Request(method = POST, uri = uri("/tags/email?tag=dsa,das"))
       val response: Response = endpoints.run(request).run
       response.status should be(Status.NotFound)
     }
