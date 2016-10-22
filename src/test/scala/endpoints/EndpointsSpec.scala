@@ -5,10 +5,10 @@ import org.http4s._
 import org.http4s.dsl._
 import org.scalatest.{Matchers, WordSpecLike}
 
-class EndpointsSpec extends WordSpecLike with Matchers {
+class EndpointsSpec extends WordSpecLike with Matchers with Endpoints {
 
   val interpreter = new TestInterpreter
-  val endpoints: HttpService = HttpService(Endpoints.routes.andThen(_.foldMap(interpreter)))
+  val endpoints: HttpService = HttpService(routes.andThen(_.foldMap(interpreter)))
 
   "The Endpoints" should {
     "respond with 200 for a basic request" in {

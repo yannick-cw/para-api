@@ -1,7 +1,7 @@
 package endpoints
 
 object CustomDecode {
-  object Tags {
+  object T {
     def unapply(params: Map[String, Seq[String]]): Option[Seq[String]] = params.get("tags")
   }
 }

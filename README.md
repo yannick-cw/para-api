@@ -13,7 +13,7 @@ Result body:
 ```javascript
 {
     email: "123@test.com",
-    terms: [
+    tags: [
         "some",
         "tags",
         "are",
@@ -31,6 +31,6 @@ Result body:
     ],
     yes@test.com: [
         "what,is,this"
-]
+    ]
 }
 ```

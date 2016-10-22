@@ -7,7 +7,7 @@ import org.http4s.HttpService
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-object RunTime {
+trait RunTime {
   def frameworkifyRoutes(routes: Route, interpreter: InMemoryDbInterpreter): HttpService =
     HttpService(
       routes.andThen(_.foldMap(interpreter).asTask.flatMap(identity)))

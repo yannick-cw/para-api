@@ -1,14 +1,13 @@
 package server
 
 import db.InMemoryDbInterpreter
-import endpoints.Endpoints._
+import endpoints.Endpoints
 import org.http4s.server.blaze.BlazeBuilder
 import org.http4s.server.{Server, ServerApp}
-import server.RunTime.frameworkifyRoutes
 
 import scalaz.concurrent.Task
 
-object Server extends ServerApp {
+object RunServer extends ServerApp with RunTime with Endpoints {
 
   val db: InMemoryDbInterpreter = new InMemoryDbInterpreter
 
