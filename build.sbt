@@ -25,3 +25,7 @@ libraryDependencies ++= http4sDependencies ++ circeDependecies ++ Seq(
   "org.reactivemongo" % "reactivemongo_2.11" % "0.12.0",
   "com.typesafe" % "config" % "1.3.1"
 )
+
+enablePlugins(JavaAppPackaging)
+enablePlugins(UniversalPlugin)
+dockerRepository:=Some("rincewind373")
