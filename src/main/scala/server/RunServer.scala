@@ -19,7 +19,7 @@ object RunServer extends ServerApp with RunTime with Endpoints {
   val endpoints = frameworkifyRoutes(routes, db)
 
   override def server(args: List[String]): Task[Server] = {
-    BlazeBuilder.bindHttp(8080, "localhost").
+    BlazeBuilder.bindHttp(8080, "0.0.0.0").
       mountService(endpoints, "/").start
   }
 }
