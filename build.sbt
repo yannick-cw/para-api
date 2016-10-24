@@ -21,5 +21,7 @@ libraryDependencies ++= http4sDependencies ++ circeDependecies ++ Seq(
   "org.scalatest" % "scalatest_2.11" % "3.0.0",
   "org.typelevel" %% "cats" % "0.7.2",
   "ch.qos.logback" % "logback-classic" % "1.1.7",
-  "org.scalacheck" % "scalacheck_2.11" % "1.13.2"
+  "org.scalacheck" % "scalacheck_2.11" % "1.13.2",
+  "org.reactivemongo" % "reactivemongo_2.11" % "0.12.0",
+  "com.typesafe" % "config" % "1.3.1"
 )

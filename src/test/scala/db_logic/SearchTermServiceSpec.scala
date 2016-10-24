@@ -2,6 +2,7 @@ package db_logic
 
 import cats._
 import helpers.TestInterpreter
+import models.User
 import org.scalatest.{Matchers, WordSpecLike}
 import org.scalacheck.Prop.forAll
 import org.scalatest.prop.Checkers
@@ -16,7 +17,7 @@ class SearchTermServiceSpec extends WordSpecLike with Matchers with Checkers {
       check(forAll{
         (mail: String, terms: List[String]) =>
           val interpreter = new TestInterpreter
-          SearchTermService.setTags(mail, terms).foldMap(interpreter)
+          SearchTermService.setTags(User(mail, terms)).foldMap(interpreter)
 
           interpreter.mail == mail &&
           interpreter.setTags == terms
@@ -28,7 +29,7 @@ class SearchTermServiceSpec extends WordSpecLike with Matchers with Checkers {
           val interpreter = new TestInterpreter
           interpreter.setTags = terms
 
-          SearchTermService.getTags(mail).foldMap(interpreter) == interpreter.setTags
+          SearchTermService.getTags(mail).foldMap(interpreter).tags == terms
       })
     }
     "should be able to retrieve all tags" in {
@@ -38,7 +39,7 @@ class SearchTermServiceSpec extends WordSpecLike with Matchers with Checkers {
           interpreter.setTags = terms
           interpreter.mail = mail
 
-          SearchTermService.getAll.foldMap(interpreter) == Map(mail -> terms)
+          SearchTermService.getAll.foldMap(interpreter) == Set(User(mail, terms))
       })
     }
   }

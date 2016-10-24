@@ -34,3 +34,14 @@ Result body:
     ]
 }
 ```
+
+### Running
+
+If you want easymode you can run this app with an in memory database.
+Just `export USE_MONGO=false` and `sbt run`.
+
+If you want to use a mongo db set with your parameters and offer a collection called `tags`
+```bash
+export MONGO_URL=mongodb://localhost:27017
+export MONGO_NAME=mongoName
+```

@@ -1,0 +1,4 @@
+# source .dev
+export MONGO_URL=mongodb://localhost:27017
+export MONGO_NAME=em
+export USE_MONGO=true

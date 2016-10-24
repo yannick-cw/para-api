@@ -18,8 +18,13 @@ class EndpointsSpec extends WordSpecLike with Matchers with Endpoints {
     }
 
     "respond with 200 for a post" in {
-      val request = Request(method = POST, uri = uri("/tags/email?tags=123,32"))
+      val interpreter = new TestInterpreter
+      val endpoints: HttpService = HttpService(routes.andThen(_.foldMap(interpreter)))
+
+      val request = Request(method = POST, uri = uri("/tags/email?tags=123&tags=32"))
       val response: Response = endpoints.run(request).run
+
+      interpreter.setTags should be(List("123","32"))
       response.status should be(Status.Ok)
     }
 
